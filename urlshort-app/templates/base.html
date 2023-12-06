@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>urlshort</title>
+    <style>
+        body {
+            font-family: monospace;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #000;
+            color: #fff;
+        }
+        
+        a {
+            color: #fff;
+        }
+
+        #bottomr {
+            position: absolute;
+            bottom: -5px;
+            right: 16px;
+            font-size: 13px;
+            }
+        
+        .container {
+            display: flex;
+            width: 80%;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .left-section {
+            flex: 1;
+            text-align: center;
+            max-width: 50%;
+        }
+        
+        .left-section input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            border: 1px solid #fff;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            background-color: #000;
+            color: #fff;
+        }
+
+        .left-section input[type="submit"] {
+            width: 30%;
+            padding: 10px;
+            border: 1px solid #fff;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            background-color: #fff;
+            color: #000;
+        }
+        
+        .right-section {
+            flex: 1;
+            padding-left: 20px;
+            text-align: center;
+            color: #fff;
+            max-width: 50%;
+        }
+        
+        .right-section table {
+            border-collapse: collapse;
+            width: 100%;
+            color: #fff;
+            border: 1px solid #fff;
+            border-radius: 5px;
+        }
+        
+        .right-section th,
+        .right-section td {
+            border: 1px solid #fff;
+            text-align: left;
+            padding: 8px;
+        }
+        
+        .right-section th {
+            background-color: #f2f2f2;
+            color: #000;
+        }
+        
+        .logout-link {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            display: block;
+            text-align: right;
+        }
+        .credit {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            color: #fff;
+        }
+
+        #topl {
+            position: absolute;
+            top: 50px;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            width: 200px;
+            height: auto;
+        }
+        
+
+        .credit a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .funny-phrase {
+            position: fixed;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            color: #fff;
+            font-size: 12px;
+        }
+
+        .discl {
+            position: fixed;
+            bottom: 10px;
+            width: 100%;
+            text-align: left;
+            color: #fff;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="topl">
+            <img src="static/logo.png" alt="Logo" style="width: 250px; height: auto;">
+        </div>
+        <div class="left-section">
+            <h2>Hey @{{username}}, drop your link here! ⬇️</h2>
+            <form action="/base" method="POST">
+                <input type="text" name="url" placeholder="Enter URL to shorten" required><br><br>
+                <input type="submit" value="Shorten">
+            </form>
+        
+            {% if short_url %}
+            <h2>Your Shortened URL: </h2> <span><a href="{{ short_url }}">{{ short_url }}</a></span>
+            {% endif %}
+        </div>
+
+        <div class="right-section">
+            <h2>History</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Original URL</th>
+                        <th>Shortened URL</th>
+                        <th>Clicks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for url in user_urls %}
+                    <tr>
+                        <td><a href="{{ url[0] }}">{{ url[0] }}</a></td>
+                        <td><a href="{{ url[1] }}">{{ url[1] }}</a></td>
+                        <td>{{ url[2] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="funny-phrase">
+        <p>*Links are only valid for 48 hours*</p>
+        Made by <a href="https://github.com/grzzlyb">@grzzlyb</a> | <a href="/logout">Logout</a>
+    </div>
+</body>
+</html>
